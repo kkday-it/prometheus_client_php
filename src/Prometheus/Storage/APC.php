@@ -179,8 +179,11 @@ class APC implements Adapter
                     'value' => $value['value'],
                 ];
             }
-            $this->sortSamples($data['samples']);
-            $counters[] = new MetricFamilySamples($data);
+
+            if (isset($data['samples']) && !empty($data['samples'])) {
+                $this->sortSamples($data['samples']);
+                $counters[] = new MetricFamilySamples($data);
+            }
         }
         return $counters;
     }
@@ -210,8 +213,10 @@ class APC implements Adapter
                 ];
             }
 
-            $this->sortSamples($data['samples']);
-            $gauges[] = new MetricFamilySamples($data);
+            if (isset($data['samples']) && !empty($data['samples'])) {
+                $this->sortSamples($data['samples']);
+                $gauges[] = new MetricFamilySamples($data);
+            }
         }
         return $gauges;
     }
@@ -286,7 +291,10 @@ class APC implements Adapter
                     'value' => $this->fromInteger($histogramBuckets[$labelValues]['sum']),
                 ];
             }
-            $histograms[] = new MetricFamilySamples($data);
+
+            if (isset($data['samples']) && !empty($data['samples'])) {
+                $histograms[] = new MetricFamilySamples($data);
+            }
         }
         return $histograms;
     }
